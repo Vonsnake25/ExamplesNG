@@ -6,6 +6,8 @@ For more information, see the documentation here: https://ballisticng-documentat
 ## Binary Folders
 The binary folders contain the ready to use mods, including any assets that you need to use them.
 
+**The assets inside the NGA files and the tool to build them are shipped with the game's Unity Tools package. You will need a copy of the game for source access to these assets.**
+
 ### Install
 * Click the green code button at the top right of this repository and then click **Download ZIP**
 * Navigate to your game's install folder, go into the **User** folder, then the **Mods** folder and then finally the **Code Mods** folder

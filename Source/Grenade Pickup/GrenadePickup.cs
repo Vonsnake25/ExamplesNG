@@ -1,5 +1,8 @@
-﻿using GameData;
-using Source.NgNetworking;
+﻿using NgAudio;
+using NgData;
+using NgMp;
+using NgPickups;
+using NgShips;
 using UnityEngine;
 
 namespace Grenade_Pickup
@@ -9,7 +12,7 @@ namespace Grenade_Pickup
         /*---The horizontal spread for spawning grenades---*/
         public static float GrenadeSpawnSpread = 0.6f;
 
-        public GrenadePickup(ShipRefs r) : base(r) { }
+        public GrenadePickup(ShipController r) : base(r) { }
 
         /*---Called when the pickup is used---*/
         public override void OnUse()
@@ -47,7 +50,7 @@ namespace Grenade_Pickup
             AiUsageDelay = Random.Range(10, 25);
 
             // warn the player that the ai has picked the grenade up if it's within 30 sections of the player
-            ShipRefs player = Ships.PlayerOneShip;
+            ShipController player = Ships.PlayerOneShip;
             if (!player || !player.IsPlayer || R.IsPassiveTowards(player)) return;
 
             if (Ships.SectionOffsetBetween(Ships.PlayerOneShip, R) < 30) R.CurrentPickupRegister.WarnPlayer();
@@ -69,7 +72,7 @@ namespace Grenade_Pickup
             if (!canSeeShip) return;
 
             // figure out which ship is at the hit point. If the AI is passive towards the ship, do nothing
-            ShipRefs targetShip = Ships.GetClosestShipToPoint(hit.point);
+            ShipController targetShip = Ships.GetClosestShipToPoint(hit.point);
             if (R.IsPassiveTowards(targetShip)) canSeeShip = false;
 
             if (canSeeShip) OnUse();
@@ -78,10 +81,10 @@ namespace Grenade_Pickup
         /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
          Spawns a new set of grenades. networkSpawn allows us to determine if the server is spawning the grenades and if it's a local spawn, we'll tell the server we've fired grenades
         ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        public static void CreateGrenade(ShipRefs ship)
+        public static void CreateGrenade(ShipController ship)
         {
             // if we're a player then play a 2D deployment sound
-            if (ship.IsPlayer) AudioHelpers.PlayOneShot(AudioHelpers.GetAudioClip(AudioHelpers.Weapons_MineDrop), AudioHelpers.E_AUDIOCHANNEL.SFX, 1.0f, 1.0f);
+            if (ship.IsPlayer) NgSound.PlayOneShot(NgSound.GetAudioClip(NgSound.Weapons_MineDrop), EAudioChannel.Sfx, 1.0f, 1.0f);
 
             // create the grenades
             GrenadeObject.CreateNew(ship.transform.TransformPoint(-GrenadeSpawnSpread, 0.0f, ship.MeshBoundsFront.z), ship.RBody.rotation, ship);

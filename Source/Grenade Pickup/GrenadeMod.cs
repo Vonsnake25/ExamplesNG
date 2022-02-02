@@ -1,17 +1,17 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using BallisticNG.Pickups;
-using BallisticSource.Mods;
 using BallisticUnityTools.AssetApi;
-using NgNetworking.Packets;
-using Source.NgNetworking;
-using Source.NgNetworking.Packets;
+using NgModding;
+using NgMp;
+using NgMp.Packets;
+using NgPickups;
+using NgShips;
 using UnityEngine;
 
 namespace Grenade_Pickup
 {
-    public class GrenadeMod : ModRegister
+    public class GrenadeMod : CodeMod
     {
         /// <summary>
         /// The pickup entry that will be applied to the ship.
@@ -49,10 +49,10 @@ namespace Grenade_Pickup
         public static AudioClip GrenadeWarningLine;
 
         /*---Called when our mod is registered into the game. Use this for setting stuff up---*/
-        public override void OnRegistered()
+        public override void OnRegistered(string modPath)
         {
             // load assets
-            GrenadeAssets = ModAssets.Load(Path.Combine(ModLocation, "grenade.nga"));
+            GrenadeAssets = ModAssets.Load(Path.Combine(modPath, "grenade.nga"));
             GrenadePrefab = GrenadeAssets.GetComponent<CustomPrefab>("Grenade", false);
             ExposionPrefab = GrenadeAssets.GetAsset<GameObject>("Explosion");
 
@@ -137,7 +137,7 @@ namespace Grenade_Pickup
                 if (peer == null) return;
 
                 // get the ship from the peer that fired the grenades
-                ShipRefs peerShip = peer.LinkedShip;
+                ShipController peerShip = peer.LinkedShip;
                 if (!peerShip) return;
 
                 // now spawn the grenades

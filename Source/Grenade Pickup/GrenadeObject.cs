@@ -1,10 +1,14 @@
 ﻿using BallisticUnityTools.AssetApi;
 using BallisticUnityTools.Triggers;
-using BnG.TrackData;
-using GameData;
-using Source.Data.Constants;
-using Source.NgStats;
-using Source.Weapons;
+using NgAudio;
+using NgData;
+using NgData.Constants;
+using NgPickups;
+using NgPickups.Physical;
+using NgPickups.Physical.Projectiles;
+using NgShips;
+using NgStats;
+using NgTrackData;
 using UnityEngine;
 
 namespace Grenade_Pickup
@@ -76,7 +80,7 @@ namespace Grenade_Pickup
         };
 
         /*---Creates a new grenade object---*/
-        public static GrenadeObject CreateNew(Vector3 position, Quaternion rotation, ShipRefs owner)
+        public static GrenadeObject CreateNew(Vector3 position, Quaternion rotation, ShipController owner)
         {
             // create object
             CustomPrefab grenadePrefab = Instantiate(GrenadeMod.GrenadePrefab);
@@ -208,7 +212,7 @@ namespace Grenade_Pickup
 
             // get the other ship from the hit objects root transform
             Transform shipT = other.gameObject.transform.root;
-            ShipRefs hitRef = shipT.GetComponent<ShipRefs>();
+            ShipController hitRef = shipT.GetComponent<ShipController>();
             bool hitShip = ShipImpact(hitRef);
 
             // if we can increase the score from the impact (team race), increase the ships score
@@ -248,7 +252,7 @@ namespace Grenade_Pickup
                 StatBounceForce *= 0.9f;
 
                 // play Impact Sound
-                AudioHelpers.PlayOneShot(AudioHelpers.GetAudioClip(AudioHelpers.Ship_FloorHit), AudioHelpers.E_AUDIOCHANNEL.SFX, 0.4f, 1.0f, transform.position, null, 15.0f, 30.0f);
+                NgSound.PlayOneShot(NgSound.GetAudioClip(NgSound.Ship_FloorHit), EAudioChannel.Sfx, 0.4f, 1.0f, transform.position, null, 15.0f, 30.0f);
 
                 if (BounceCount > StatMaxBounces) DestroyProjectile(null);
 

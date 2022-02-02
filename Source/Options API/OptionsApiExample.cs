@@ -1,13 +1,13 @@
 ﻿using System.IO;
-using BallisticSource.Mods;
-using GameData;
-using Source.Interface.MenuUI;
-using Source.Modding;
+using NgData;
+using NgEvents;
+using NgModding;
+using NgUi.MenuUi;
 using UnityEngine;
 
 namespace BallisticNG.ExampleMods
 {
-    public class OptionsApiExample : ModRegister
+    public class OptionsApiExample : CodeMod
     {
         // The file path to our settings ini. See below in OnRegistered.
         private string _settingsIni;
@@ -18,10 +18,10 @@ namespace BallisticNG.ExampleMods
         // The HUE of our message color.
         public static float HelloWorldHue = 0.5f;
 
-        public override void OnRegistered()
+        public override void OnRegistered(string modPath)
         {
             // Cache the file path to our settings ini. We'll place it in the mods folder.
-            _settingsIni = Path.Combine(ModLocation, "settings.ini");
+            _settingsIni = Path.Combine(modPath, "settings.ini");
             
             // Hook into the load/save delegates for settings.
             //
@@ -31,7 +31,7 @@ namespace BallisticNG.ExampleMods
             ModOptions.OnSaveSettings += OnSaveSettings;
 
             // also hook into OnCountdownStart so we can trigger our message.
-            BallisticEvents.Race.OnCountdownStart += OnCountdownStart;
+            NgRaceEvents.OnCountdownStart += OnCountdownStart;
             
             // Finally register our options menu
             ModOptions.RegisterMod("Api Example", GenerateModUi, ModUiToCode);
@@ -74,7 +74,7 @@ namespace BallisticNG.ExampleMods
             if (DoHelloWorld)
             {
                 Color msgColor = Color.HSVToRGB(HelloWorldHue, 1.0f, 1.0f);
-                BallisticEvents.Ui.CallOnTriggerMessage("Hello World", Ships.PlayerOneShip, msgColor);
+                NgUiEvents.CallOnTriggerMessage("Hello World", Ships.PlayerOneShip, msgColor);
             }
         }
         

@@ -1,5 +1,5 @@
 # BallisticNG Code Mod Examples
-**These examples are for BallisticNG 1.2.3 and above. These will not work on previous versions of the game**
+**These examples are for BallisticNG 1.3 and above. These will not work on previous versions of the game**
 
 For more information, see the documentation here: https://ballisticng-documentation.readthedocs.io/en/latest/code_mods/getting_started.html
 

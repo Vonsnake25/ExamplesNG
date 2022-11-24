@@ -1,5 +1,5 @@
 # BallisticNG Code Mod Examples
-**These examples are for BallisticNG 1.2.3 and above. These will not work on previous versions of the game**
+**These examples are for BallisticNG 1.3 and above. These will not work on previous versions of the game**
 
 For more information, see the documentation here: https://ballisticng-documentation.readthedocs.io/en/latest/code_mods/getting_started.html
 
@@ -20,7 +20,7 @@ The binary folders contain the ready to use mods, including any assets that you 
 ## Source Folders
 The source folders contain the source code to each mod. These are just the .cs files and you will need to create the visual studio solution and project yourself.
 
-**Use .NET 4.6 for your visual studio projects.**
+**Use .NET 4.7 for your visual studio projects.**
 
 **Also make sure you disable copy local for every dependency. Don't ship the dependencies with your code mods.**
 

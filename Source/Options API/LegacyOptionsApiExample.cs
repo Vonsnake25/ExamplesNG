@@ -1,4 +1,5 @@
-﻿using System.IO;
+// NOTE: This is for pre-1.3 versions of the game. This API still exists in 1.4+ but is not used.
+using System.IO;
 using NgData;
 using NgEvents;
 using NgModding;
